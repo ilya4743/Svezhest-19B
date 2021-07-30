@@ -1,0 +1,96 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Прибор Свежесть-19B</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<center>
+<table cellpadding=0 cellspacing=0 id=wrap><tr><td align=center id=wraptd>
+<table cellpadding=10% class=table1>
+<tr valign=middle>
+<th colspan="2" valign="middle">
+<h1 class="adaptiveH1">Прибор Свежесть-19B</h1>
+</th>
+</tr>
+<tr>
+<td width=25% valign="middle" align="center">
+<img src="logo-bmstu.svg" alt="Мытищинский филиал МГТУ им. Н. Э. Баумана" class=image1>
+</td>
+<td bgcolor=#27313d>
+<div class="menu">
+  
+	<a href='index.htm'><div class="adaptive">Главная</div></a>
+	<a href="pult.htm"><div class="adaptive"><font color=#9b2d30>Дебаг-монитор</font></div></a>
+	<a href="setup.htm"><div class="adaptive">Настройки</div></a>
+	<a href="info.htm"><div class="adaptive">Информация</div></a>
+	<a href="update.htm"><div class="adaptive">Обновление прибора</div></a>
+	
+</div>
+</td>
+</tr>
+ <tr>
+<td colspan="2">
+  <table align="center" class=tablePult cellpadding=10%>
+    <thead>
+      <tr class="adaptiveTEXT">
+        <th colspan="2" valign="middle" align="center">Показания датчиков</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="adaptiveTEXT">
+        <td width=35% align="center"><p><b>BME280</b></td>
+        <td>Temperature <span id = "BME280_temperature">...</span> &deg;C<BR>Humidity <span id = "BME280_humidity">...</span> %<BR>
+        Pressure <span id = "BME280_pressure">...</span> mm</td>  
+      </tr>
+      <tr class="adaptiveTEXT">
+        <td width=35% align="center"><p><b>CCS811</b></td>
+        <td>eCO2 <span id = "CCS811_eCO2">...</span> ppm<BR>TVOC <span id = "CCS811_TVOC">...</span> ppb</td>
+      </tr>
+      <tr class="adaptiveTEXT">
+        <td width=35% align="center"><p><b>MH-Z19B</b></td>
+        <td>CO2 <span id = "MH-Z19B_CO2">...</span> ppm</td>
+      </tr>
+    </tbody>
+  </table>
+</td>
+</tr>
+<tr>
+<td colspan="2" >
+<hr color=white>
+   
+<p class="adaptiveTEXT">&ldquo;Разработка прибора анализа качества воздуха в учебных аудиториях&rdquo;<BR><br>
+Студент: Соломатин И. А. К3-81Б<BR>Руководитель: Чернышов А. В.
+
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</center>
+    <script>
+      setInterval(function() {getData();}, 5000);
+      function getData() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          let data = JSON.parse(this.responseText);
+          document.getElementById("BME280_temperature").innerHTML = data.BME280.temp;
+          document.getElementById("BME280_humidity").innerHTML = data.BME280.humidity;
+          document.getElementById("BME280_pressure").innerHTML = data.BME280.pressure;
+          document.getElementById("CCS811_eCO2").innerHTML = data.CCS811.eCO2;
+          document.getElementById("CCS811_TVOC").innerHTML = data.CCS811.TVOC;
+          document.getElementById("MH-Z19B_CO2").innerHTML = data.MHZ19B.CO2;
+        }
+      };
+      xhttp.open("GET", "readADC", true);
+      xhttp.send();
+      }
+    </script>
+</body>
+</html>
+
+
+

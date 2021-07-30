@@ -1,0 +1,95 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Прибор Свежесть-19B</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body onload="load();">
+<center>
+
+<table cellpadding=0 cellspacing=0 id=wrap><tr><td align=center id=wraptd>
+<table cellpadding=10% class=table1>
+<tr>
+<th colspan="2" valign="middle">
+<h1 class="adaptiveH1">Прибор Свежесть-19B</h1>
+</th>
+</tr>
+<tr>
+<td width=25% bgcolor=#27313d align=center valign=middle>
+<img src="logo-bmstu.svg" alt="Мытищинский филиал МГТУ им. Н. Э. Баумана" class=image1>
+</td>
+<td bgcolor=#27313d>
+<div class="menu">
+  
+	<a href='index.htm'><div class="adaptive" ><font color=#9b2d30>Главная</font></div></a>
+	<a href="pult.htm"><div class="adaptive">Дебаг-монитор</div></a>
+	<a href="setup.htm"><div class="adaptive">Настройки</div></a>
+	<a href="info.htm"><div class="adaptive">Информация</div></a>
+	<a href="update.htm"><div class="adaptive">Обновление прибора</div></a>
+	
+</div>
+</td>
+</tr>
+<tr><td colspan="2">
+  <table><tr><td>
+    <div class=adaptive>
+      <font color=white>
+<p>Для просмотра актуальных измерений в режиме онлайн перейдите по ссылке “Дебаг-монитор”.<BR>
+Для управления прибором перейдите по ссылке “Настройки”.<BR>
+Более подробно о приборе можно узнать по ссылке “Информация”.<BR>
+Для обновления прошивки и доступа к файловой системе перейдите по ссылке “Обновление прибора”.
+<p></p></font>
+    <div id=WIFI></div></div>
+  </td></tr></table>
+</td></tr>
+<tr>
+<td colspan="2" >
+<hr color=white>
+   
+<p class="adaptiveTEXT">&ldquo;Разработка прибора анализа качества воздуха в учебных аудиториях&rdquo;<BR><br>
+Студент: Соломатин И. А. К3-81Б<BR>Руководитель: Чернышов А. В.
+
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</center>
+<script type="text/javascript">
+  var xmlHttp=createXmlHttpObject();
+  function createXmlHttpObject(){
+    if(window.XMLHttpRequest){
+      xmlHttp=new XMLHttpRequest();
+    }else{
+      xmlHttp=new ActiveXObject('Microsoft.XMLHTTP');
+    }
+    return xmlHttp;
+  }
+    function load(){
+    if(xmlHttp.readyState==0 || xmlHttp.readyState==4){
+      xmlHttp.open('PUT','/status.json',true);
+      xmlHttp.send(null);
+      xmlHttp.onload = function(e) {
+          jsonResponse=JSON.parse(xmlHttp.responseText);
+          const obj = JSON.parse(xmlHttp.responseText);
+          console.log(obj.net, obj.BME280);
+          if(Boolean(obj.net)){
+              var p;
+                p = document.getElementById('WIFI');
+                p.innerHTML = 'Прибор подключен к сети.';
+          }
+          else
+          {
+              var p;
+              p = document.getElementById('WIFI');
+              p.innerHTML = 'Ошибка при подключении к сети! Поднята точка доступа.';
+          }
+        }
+    }
+  }
+    
+</script>
+</body>
+</html>
